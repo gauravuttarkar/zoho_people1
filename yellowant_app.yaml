@@ -1,0 +1,179 @@
+api_url: https://d0e6f62c.ngrok.io/yellowant-api/
+creator_email: gaurav.uttarkar@gmail.com
+documentation_url: https://www.yellowant.com/api/
+functions:
+  accept:
+    function_type: 1
+    input_args:
+      user_int:
+        arg_type: 14
+        description: User Integration of the sender
+        example: INTEGRATION_ID
+        name: user_int
+        required: 1
+    invoke_name: accept
+    is_active: 0
+    max_retries: 0
+    name: accept
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Function to accept an invitation
+    user_rate_limit: 0.0
+  choosecolor:
+    function_type: 1
+    input_args: {}
+    invoke_name: choosecolor
+    is_active: 0
+    max_retries: 0
+    name: chooseColor
+    output_keys:
+      _keys:
+        list: '[list]:    List of List'
+      list:
+        Color: '__unicode:    List  region  names'
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Choose White or Black
+    user_rate_limit: 0.0
+  makemove:
+    function_type: 1
+    input_args:
+      move:
+        arg_type: 14
+        description: Notation of your move
+        example: e4
+        name: move
+        required: 1
+    invoke_name: makemove
+    is_active: 1
+    max_retries: 0
+    name: Make a move
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Function to make a move
+    user_rate_limit: 0.0
+  makemoveagainst:
+    function_type: 1
+    input_args:
+      move:
+        arg_type: 14
+        description: Move to be played
+        example: e4
+        name: move
+        required: 1
+    invoke_name: makemoveagainst
+    is_active: 0
+    max_retries: 0
+    name: Make move against
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Make move against a player
+    user_rate_limit: 0.0
+  playagainst:
+    function_type: 1
+    input_args:
+      yellowant_user_id:
+        arg_type: 14
+        description: yellowant_user_id
+        example: '1241'
+        name: yellowant_user_id
+        required: 1
+    invoke_name: playagainst
+    is_active: 1
+    max_retries: 0
+    name: Play against a player
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Function to send an invite to another player to play chess
+    user_rate_limit: 0.0
+  playcomputer:
+    function_type: 1
+    input_args: {}
+    invoke_name: playcomputer
+    is_active: 0
+    max_retries: 0
+    name: Play computer
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Make the computer to move
+    user_rate_limit: 0.0
+  showboard:
+    function_type: 1
+    input_args: {}
+    invoke_name: showboard
+    is_active: 1
+    max_retries: 0
+    name: Show board
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Function to show the board
+    user_rate_limit: 0.0
+  startgame:
+    function_type: 1
+    input_args:
+      Color:
+        arg_type: 14
+        description: Choose White/Black.
+        example: White
+        name: Color
+        required: 1
+    invoke_name: startgame
+    is_active: 1
+    max_retries: 0
+    name: Start Game
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Command to start a new game
+    user_rate_limit: 0.0
+  startgameplayer:
+    function_type: 1
+    input_args:
+      Color:
+        arg_type: 14
+        description: Color of the preferable pieces
+        example: White
+        name: Color
+        required: 1
+    invoke_name: startgameplayer
+    is_active: 1
+    max_retries: 0
+    name: Start game against player
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Command to start a game against a player
+    user_rate_limit: 0.0
+  webhook:
+    function_type: 2
+    input_args: {}
+    invoke_name: webhook
+    is_active: 1
+    max_retries: 0
+    name: webhook
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Function for webhooks
+    user_rate_limit: 0.0
+icon_url: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdcKTJH01Fq4kvszI1gGy991GhIZRcSi8wMRtG3WggUfhBz-DuJQ
+install_page_url: https://d0e6f62c.ngrok.io/
+invoke_name: chess
+is_active: 1
+is_production_or_sandbox: 1
+long_description: Play a game of chess
+name: Chess
+privacy_policy_url: https://www.yellowant.com/common/privacy/
+rate_limit: 0.0
+rate_limited: 0
+redirect_uris: https://d0e6f62c.ngrok.io/yellowant-oauth-redirect/
+short_description: Play a game of chess
+user_rate_limit: 0.0
+visibility_scope: 1
+website: https://d0e6f62c.ngrok.io/
