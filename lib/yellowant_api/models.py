@@ -39,6 +39,7 @@ class UserIntegration(models.Model):
     yellowant_integration_token = models.CharField(max_length=2048, null=False)
     auth_token = models.CharField(max_length=2048,null=True)
     update_login_flag = models.BooleanField(default=False)
+    webhook_id = models.CharField(max_length=100, default="", null=True)
 
 
 

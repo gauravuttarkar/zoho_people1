@@ -1,6 +1,6 @@
 """Code which actually takes care of application API calls or other business logic"""
 from yellowant.messageformat import MessageClass, MessageAttachmentsClass, AttachmentFieldsClass ,MessageButtonsClass
-from yellowant_api.models import UserIntegration
+from ..yellowant_api.models import UserIntegration
 import uuid
 import requests
 import json

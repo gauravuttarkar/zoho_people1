@@ -3,7 +3,7 @@ a YA message object accordingly
 """
 from yellowant.messageformat import MessageClass
 
-from yellowant_api.models import UserIntegration
+from ..yellowant_api.models import UserIntegration
 from .commands_by_invoke_name import COMMANDS_BY_INVOKE_NAME
 
 

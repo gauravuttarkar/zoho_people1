@@ -9,10 +9,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from yellowant import YellowAnt
 #from django.urls import reverse
-from yellowant_api.models import UserIntegration
+from ..yellowant_api.models import UserIntegration
 #from .forms import UserForm
 #from django.contrib.auth import authenticate, login
-
+from django.conf import settings
 
 #import requests
 # Create your views here.
@@ -21,7 +21,8 @@ from yellowant_api.models import UserIntegration
 def index(request, path):
     """Index of the user Integration."""
     context = {
-        "user_integrations": []
+        "user_integrations": [],
+        "DJANGO_ENV": settings.DJANGO_ENV
     }
 
     if request.user.is_authenticated:

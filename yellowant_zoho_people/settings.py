@@ -37,12 +37,12 @@ if DJANGO_ENV == "heroku":
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
     BASE_URL = "https://{}.herokuapp.com".format(HEROKU_APP_NAME)
 else:
-    BASE_URL = os.environ.get("BASE_URL", "https://dce25497.ngrok.io")
+    BASE_URL = os.environ.get("BASE_URL", "https://83b6d5dd.ngrok.io")
 
 # app_name = os.environ.get("HEROKU_APP_NAME")
 # BASE_URL = "https://{}.herokuapp.com".format(app_name)
 ALLOWED_HOSTS = ['*']
-BASE_URL = "https://dce25497.ngrok.io"
+BASE_URL = "https://83b6d5dd.ngrok.io"
 BASE_HREF = "/"
 SITE_PROTOCOL = "https://"
 
@@ -85,9 +85,9 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'yellowant_api',
+    'lib.yellowant_api',
 
-    'web',
+    'lib.web',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

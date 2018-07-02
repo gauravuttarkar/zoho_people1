@@ -1,7 +1,7 @@
 """Views for the API urls"""
 import json
 import uuid
-
+from yellowant.messageformat import MessageClass, MessageAttachmentsClass, AttachmentFieldsClass ,MessageButtonsClass
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotAllowed, \
     HttpResponseBadRequest
 from django.contrib.auth.models import User
@@ -11,8 +11,8 @@ import requests
 from django.urls import reverse
 from yellowant import YellowAnt
 
-from yellowant_command_center.command_center import CommandCenter
-from yellowant_api.models import YellowAntRedirectState, UserIntegration
+from ..yellowant_command_center.command_center import CommandCenter
+from ..yellowant_api.models import YellowAntRedirectState, UserIntegration
 
 
 def request_yellowant_oauth_code(request):
@@ -70,7 +70,7 @@ def yellowant_oauth_redirect(request):
 
     # get YA user details
     ya_user = ya_client.get_user_profile()
-
+    webhook_id = str(uuid.uuid4())
     # create a new user integration for your application
     user_integration = ya_client.create_user_integration()
 
@@ -80,7 +80,8 @@ def yellowant_oauth_redirect(request):
         yellowant_team_subdomain=ya_user["team"]["domain_name"],
         yellowant_integration_id=user_integration["user_application"],
         yellowant_integration_invoke_name=user_integration["user_invoke_name"],
-        yellowant_integration_token=access_token
+        yellowant_integration_token=access_token,
+        webhook_id = webhook_id
     )
 
     # A new YA user integration has been created and the details have been successfully saved in
@@ -110,7 +111,6 @@ def yellowant_api(request):
 
     # check whether the request is a user command, or a webhook subscription notice from YA
     if data["event_type"] == "command":
-        print(data)
         # request is a user command
 
         # retrieve the user integration id to identify the user
@@ -122,9 +122,7 @@ def yellowant_api(request):
         # any arguments that might be present as an input for the command
         args = data.get("args")
 
-        print(yellowant_integration_id)
-        print(command_name)
-        print(args)
+
         # create a YA Message object with the help of the YA SDK
         message = CommandCenter(yellowant_integration_id,
                                 command_name, args).parse()
@@ -142,7 +140,7 @@ def yellowant_api(request):
 def api_key(request):
     """An object is created in the database using the request."""
     data = json.loads(request.body)
-    print(data)
+
     object = UserIntegration.objects.get(id=data['user_integration_id'])
     auth_token = data['auth_token']
 
@@ -150,34 +148,131 @@ def api_key(request):
     if response.status_code != 200:
         return HttpResponse("Failed", status=response.status_code)
 
-    print(response)
-
-
     object.update_login_flag = True
     object.auth_token = auth_token
     object.save()
 
-    print(data)
-    print("Winter is coming")
-    #
-    #
-    # try:
-    #     get_credentials(data['AZURE_tenant_id'], data['AZURE_client_id'],
-    #                     data['AZURE_subscription_id'],
-    #                     data['AZURE_client_secret'])
-    # except:
-    #     return HttpResponse("Invalid credentials. Please try again")
-    #
-    #
-    # else:
-    #     aby = azure.objects.get(user_integration_id=int(data["user_integration_id"]))
-    #     aby.AZURE_tenant_id = data['AZURE_tenant_id']
-    #     aby.AZURE_client_id = data['AZURE_client_id']
-    #     aby.AZURE_subscription_id = data['AZURE_subscription_id']
-    #     aby.AZURE_client_secret = data['AZURE_client_secret']
-    #     aby.AZURE_update_login_flag = True
-    #     aby.AZURE_tenant_id = data['AZURE_tenant_id']
-    #     aby.save()
 
     return HttpResponse("Success", status=200)
+
+def webhooks(request, id=None):
+    """
+        This function handles the incoming webhooks.
+    """
+    print(request.body)
+
+    event_type = request.POST.get('event_type')
+    print(event_type)
+    print(type(event_type))
+
+    if event_type == "created":
+        # print("in pipeline webhook")
+        employee_created(request, id)
+
+    elif event_type == "deleted":
+        # print("in user webhook")
+        print("Inside elif")
+        employee_deleted(request, id)
+
+    elif event_type == "invoice":
+        # print("in deal webhook")
+        add_new_invoice(request, id)
+
+    return HttpResponse("OK", status=200)
+
+
+def employee_deleted(request,id):
+    print('Inside employee delete')
+    name = request.POST['name']
+    contact_id = request.POST['id']
+    last_name = request.POST['last_name']
+    email = request.POST['email']
+
+    yellow_obj = UserIntegration.objects.get(webhook_id=id)
+    access_token = yellow_obj.yellowant_integration_token
+    integration_id = yellow_obj.yellowant_integration_id
+    service_application = str(integration_id)
+
+    # Creating message object for webhook message
+    webhook_message = MessageClass()
+    webhook_message.message_text = "Employee details deleted"
+    attachment = MessageAttachmentsClass()
+
+    field = AttachmentFieldsClass()
+    field.title = "Name"
+    field.value = name + " " + last_name
+
+    attachment.attach_field(field)
+
+    field1 = AttachmentFieldsClass()
+    field1.title = "Email ID"
+    field1.value = email
+
+    attachment.attach_field(field1)
+
+    # print(integration_id)
+    webhook_message.data = {
+        "Name": name,
+        "ID": contact_id,
+        "Email": email,
+        "LastName": last_name
+    }
+    webhook_message.attach(attachment)
+    # Creating yellowant object
+    yellowant_user_integration_object = YellowAnt(access_token=access_token)
+
+    # Sending webhook message to user
+    send_message = yellowant_user_integration_object.create_webhook_message(
+        requester_application=service_application,
+        webhook_name="deleteemployeewebhook", **webhook_message.get_dict())
+    return HttpResponse("OK", status=200)
+
+
+def employee_created(request,id):
+
+    print('Inside employee created')
+    name = request.POST['name']
+    contact_id = request.POST['id']
+    last_name = request.POST['last_name']
+    email = request.POST['email']
+
+    yellow_obj = UserIntegration.objects.get(webhook_id=id)
+    access_token = yellow_obj.yellowant_integration_token
+    integration_id = yellow_obj.yellowant_integration_id
+    service_application = str(integration_id)
+
+    # Creating message object for webhook message
+    webhook_message = MessageClass()
+    webhook_message.message_text = "New Employee added"
+    attachment = MessageAttachmentsClass()
+
+    field = AttachmentFieldsClass()
+    field.title = "Name"
+    field.value = name + " " + last_name
+
+    attachment.attach_field(field)
+
+    field1 = AttachmentFieldsClass()
+    field1.title = "Email ID"
+    field1.value = email
+
+    attachment.attach_field(field1)
+
+    # print(integration_id)
+    webhook_message.data = {
+        "Name": name,
+        "ID": contact_id,
+        "Email": email,
+        "LastName": last_name
+    }
+    webhook_message.attach(attachment)
+    # Creating yellowant object
+    yellowant_user_integration_object = YellowAnt(access_token=access_token)
+
+    # Sending webhook message to user
+    send_message = yellowant_user_integration_object.create_webhook_message(
+        requester_application=service_application,
+        webhook_name="createemployeewebhook", **webhook_message.get_dict())
+    return HttpResponse("OK", status=200)
+
 
