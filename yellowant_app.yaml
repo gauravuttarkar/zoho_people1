@@ -1,0 +1,145 @@
+api_url: https://83b6d5dd.ngrok.io/yellowant-api/
+creator_email: gaurav.uttarkar@gmail.com
+documentation_url: https://yellowant.com/api/
+functions:
+  addemployee:
+    function_type: 1
+    input_args:
+      EmailID:
+        arg_type: 14
+        description: Email ID of the new employee
+        example: jonsnow@westeros.com
+        name: EmailID
+        required: 1
+      EmployeeID:
+        arg_type: 14
+        description: ID of the new Employee
+        example: '1'
+        name: EmployeeID
+        required: 1
+      FirstName:
+        arg_type: 14
+        description: First name of the new Employee
+        example: John
+        name: FirstName
+        required: 1
+      LastName:
+        arg_type: 14
+        description: Last name of the new Employee
+        example: Snow
+        name: LastName
+        required: 1
+    invoke_name: addemployee
+    is_active: 1
+    max_retries: 0
+    name: Add employee
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Command to add an employee
+    user_rate_limit: 0.0
+  createemployeewebhook:
+    function_type: 2
+    input_args: {}
+    invoke_name: createemployeewebhook
+    is_active: 0
+    max_retries: 0
+    name: Create employee webhook
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Webhook function for creating a employee
+    user_rate_limit: 0.0
+  deleteemployeewebhook:
+    function_type: 2
+    input_args: {}
+    invoke_name: deleteemployeewebhook
+    is_active: 0
+    max_retries: 0
+    name: Delete employee Webhook
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Delete employee webhook
+    user_rate_limit: 0.0
+  fetchallemployees:
+    function_type: 1
+    input_args: {}
+    invoke_name: fetchallemployees
+    is_active: 1
+    max_retries: 0
+    name: Fetch all Employees
+    output_keys:
+      _keys:
+        list: '[list]:    List of List'
+      list:
+        employee_id: '__unicode:    List employee ID'
+        employee_name: '__unicode:    List employee name'
+        record_id: '__unicode:    List record ID'
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Command to fetch all employees
+    user_rate_limit: 0.0
+  getattendance:
+    function_type: 1
+    input_args:
+      employee_id:
+        arg_type: 14
+        description: ID of the employee
+        example: '1'
+        name: employee_id
+        required: 1
+      end_date:
+        arg_type: 8
+        description: End date of the report
+        example: End date
+        name: end_date
+        required: 1
+      start_date:
+        arg_type: 8
+        description: Start date of the report
+        example: Date
+        name: start_date
+        required: 1
+    invoke_name: getattendance
+    is_active: 1
+    max_retries: 0
+    name: Get attendance report
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Command to fetch the attendance report of a particular employee
+    user_rate_limit: 0.0
+  getemployee:
+    function_type: 1
+    input_args:
+      employee_id:
+        arg_type: 14
+        description: Employee ID
+        example: '2'
+        name: employee_id
+        required: 1
+    invoke_name: getemployee
+    is_active: 1
+    max_retries: 0
+    name: Get employee
+    output_keys: {}
+    privacy_mode: 0
+    rate_limited: 0
+    short_description: Command to get details of a particular employee
+    user_rate_limit: 0.0
+icon_url: https://www.softwareadvice.com/imglib/products/logos-hd/logo_18456_hd.png?v=b124d6f5b3bbbb14c32a81507ca15d55
+install_page_url: https://yellowant.com
+invoke_name: zohopeople
+is_active: 1
+is_production_or_sandbox: 0
+long_description: Yellowant integration with Zoho People application
+name: Zoho People
+privacy_policy_url: https://yellowant.com/common/privacy/
+rate_limit: 0.0
+rate_limited: 0
+redirect_uris: https://83b6d5dd.ngrok.io/yellowant-oauth-redirect/
+short_description: Zoho People Application
+user_rate_limit: 0.0
+visibility_scope: 0
+website: https://yellowant.com
