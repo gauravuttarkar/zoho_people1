@@ -42,7 +42,7 @@ else:
 # app_name = os.environ.get("HEROKU_APP_NAME")
 # BASE_URL = "https://{}.herokuapp.com".format(app_name)
 ALLOWED_HOSTS = ['*']
-BASE_URL = "https://83b6d5dd.ngrok.io"
+# BASE_URL = "https://83b6d5dd.ngrok.io"
 BASE_HREF = "/"
 SITE_PROTOCOL = "https://"
 
@@ -130,31 +130,31 @@ WSGI_APPLICATION = 'yellowant_zoho_people.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-#
-# if DJANGO_ENV == "heroku":
-#     import dj_database_url
-#
-#     DATABASES = {
-#         'default': dj_database_url.config(
-#             default='sqlite:////{0}'.format(
-#                 os.path.join(BASE_DIR, 'db.sqlite3'))
-#         )
-#     }
-# else:
-#     DATABASES = {
-#         # 'default': {
-#         #     'ENGINE': 'django.db.backends.sqlite3',
-#         #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#         # }
-#         'default': {
-#             'ENGINE': 'django.db.backends.mysql',
-#             'NAME': 'zoho_people1',
-#             'USER': "root",
-#             'PASSWORD': "root1234",
-#             'HOST': "localhost",
-#             'PORT': '',
-#         }
-#     }
+
+if DJANGO_ENV == "heroku":
+    import dj_database_url
+
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='sqlite:////{0}'.format(
+                os.path.join(BASE_DIR, 'db.sqlite3'))
+        )
+    }
+else:
+    DATABASES = {
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'zoho_people1',
+            'USER': "root",
+            'PASSWORD': "root1234",
+            'HOST': "localhost",
+            'PORT': '',
+        }
+    }
 
 DATABASES = {
     # 'default': {
