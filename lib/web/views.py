@@ -22,7 +22,9 @@ def index(request, path):
     """Index of the user Integration."""
     context = {
         "user_integrations": [],
-        "DJANGO_ENV": settings.DJANGO_ENV
+        "DJANGO_ENV": settings.DJANGO_ENV,
+        "BASE_HREF" : settings.BASE_HREF
+
     }
 
     if request.user.is_authenticated:

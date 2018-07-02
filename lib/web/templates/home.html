@@ -2,7 +2,8 @@
 
 {% block title %}Home{% endblock %}
 {% load static %}
-<base href="/">
+<!--<base href="/">-->
+{% block base %}<base href="{{base_href}}">{% endblock %}
 {% block content %}
 
 
