@@ -8,54 +8,54 @@ from yellowant import YellowAnt
 from django.conf import settings
 
 
-def get_attendance(args,user_integration):
-    auth_token_object = UserIntegration.objects.get(yellowant_integration_id=user_integration.yellowant_integration_id)
-    auth_token = auth_token_object.auth_token
-    m = MessageClass()
+# def get_attendance(args,user_integration):
+#     auth_token_object = UserIntegration.objects.get(yellowant_integration_id=user_integration.yellowant_integration_id)
+#     auth_token = auth_token_object.auth_token
+#     m = MessageClass()
 
-    url = 'https://people.zoho.com/people/api/attendance/getUserReport?'
+#     url = 'https://people.zoho.com/people/api/attendance/getUserReport?'
 
-    sDate = args.get('start_date')
-    eDate = args.get('end_date')
-    employee_id = args.get('employee_id')
+#     sDate = args.get('start_date')
+#     eDate = args.get('end_date')
+#     employee_id = args.get('employee_id')
 
-    data = {
-            'authtoken' : auth_token,
-            'sdate' : sDate,
-            'edate' : eDate,
-            'empId' : employee_id,
-            'dateFormat': 'yyyy-MM-dd'
-            }
+#     data = {
+#             'authtoken' : auth_token,
+#             'sdate' : sDate,
+#             'edate' : eDate,
+#             'empId' : employee_id,
+#             'dateFormat': 'yyyy-MM-dd'
+#             }
 
-    response = requests.post(url,data=data)
-    response = response.json()
-    print(type(response))
-    attachment = MessageAttachmentsClass()
+#     response = requests.post(url,data=data)
+#     response = response.json()
+#     print(type(response))
+#     attachment = MessageAttachmentsClass()
 
-    for k,v in response.items():
-        attachment = MessageAttachmentsClass()
-        attachment.title = k
-        for k1,v1 in v.items():
-            field = AttachmentFieldsClass()
-            field.title = k1
-            field.value = v1
-            attachment.attach_field(field)
-        m.attach(attachment)
-
-
-
-        field = AttachmentFieldsClass()
+#     for k,v in response.items():
+#         attachment = MessageAttachmentsClass()
+#         attachment.title = k
+#         for k1,v1 in v.items():
+#             field = AttachmentFieldsClass()
+#             field.title = k1
+#             field.value = v1
+#             attachment.attach_field(field)
+#         m.attach(attachment)
 
 
-    print(response)
 
-    print(sDate)
-    print(eDate)
-    print(employee_id)
+#         field = AttachmentFieldsClass()
 
-    m.message_text = "Just test"
 
-    return m
+#     print(response)
+
+#     print(sDate)
+#     print(eDate)
+#     print(employee_id)
+
+#     m.message_text = "Just test"
+
+#     return m
 
 
 
